@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "935896390156",
+    "project_id": "fan-app-862ea",
+    "storage_bucket": "fan-app-862ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935896390156:android:4525fde22fdcc506c86c29",
+        "android_client_info": {
+          "package_name": "com.yerr.fanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935896390156-cspoaq0i3m8hshj871478u145n20lk6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXrxLjjquzgB3ZMYBTSobMQaRzZl50nn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935896390156-cspoaq0i3m8hshj871478u145n20lk6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
