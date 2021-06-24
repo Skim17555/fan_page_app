@@ -52,10 +52,12 @@ If the .json file poses any issues, alternatively you can also run with the comm
 FOR TESTING FUNCTIONALITY:
 -------------------------------------------------------------------------------------------------------------------
 To test 'admin' functionality:
+
     email: bleh@gmail.com
     password: 123456
 
 To test 'customer' functionality:
+
     email: troyboi@gmail.com
     password: 123456
 
@@ -66,9 +68,9 @@ DEPENDENCIES & PLUG-INS:
 In case the dependencies and plug ins do not carry over to github:
 
 Inside pubspec.yaml:
+
     # flutter sdk version 
     sdk: ">=2.12.0 <3.0.0"
-
     # These are the versions used for firebase and google_sign_in
     firebase_core: ^1.3.0
     firebase_auth: ^1.4.1
@@ -77,8 +79,10 @@ Inside pubspec.yaml:
     flutter_signin_button: ^2.0.0 
     # the flutter_sign_in_button is used for the google log in button 
 
+
+# For Google and Firebase:
 Inside 'build.gradle' file under the 'android/app' folder, add these implementations in the 'dependencies {}' section:
-# these are all for firebase and google
+
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.android.support:multidex:1.0.3'
@@ -92,13 +96,13 @@ Inside 'build.gradle' file under the 'android/app' folder, add these implementat
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
 Do the same for the other 'build.gradle' file that is inside the 'android' folder, add these implementations in the 'dependencies {}' section:
-# for google services 
+
     classpath 'com.android.tools.build:gradle:4.1.0'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.google.gms:google-services:4.3.8'
 
 
-The file 'index.html' must include the following:
+# The file 'index.html' must include the following
 
 Inside the <head> must include to allow google_sign_in for web app:
 
