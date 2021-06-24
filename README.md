@@ -11,7 +11,7 @@ The app must be run with:
     flutter run --no-sound-null-safety
 
 If the above command does not work, go to settings -> Workspace -> Dark & Flutter.
-Look for Dart: Flutter Additional Args and click Add Item to insert "--no-sound-null-safety". Do the same for Dart: Analyzer Additional Args
+Look for Dart: Flutter Run Additional Args and click Add Item to insert "--no-sound-null-safety". Do the same for Dart: Vm Additional Args. 
 
 If it still does not work, go to 'settings.json' and add the following:
 

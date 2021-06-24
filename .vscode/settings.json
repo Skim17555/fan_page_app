@@ -3,5 +3,10 @@
     "[dart]": {
         "editor.formatOnSave": false
     },
-
+    "dart.flutterRunAdditionalArgs": [
+        "--no-sound-null-safety"
+    ],
+    "dart.vmAdditionalArgs": [
+        "--no-sound-null-safety"
+    ]
 }
