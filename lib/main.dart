@@ -39,30 +39,4 @@ class SizeConfig {
   }
 }
 
-/*
-class MyApp extends StatefulWidget{
-  @override
-  _AppState createState() => _AppState();
 
-}
-class _AppState extends State<MyApp>{
-  @override
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  Widget build(BuildContext context){
-    return FutureBuilder(
-      future: _initialization ,
-      builder: (context, snapshot){
-
-        if(snapshot.hasError){
-          return SomethingWentWrong();
-        }
-        if(snapshot.connectionState == ConnectionState.done){
-
-          return MyAwesomeApp();
-        }
-        return Loading();
-      }
-    )
-  }
-}
-*/

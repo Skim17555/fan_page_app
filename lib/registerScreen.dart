@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
+
 class RegisterScreen extends StatefulWidget{
   @override 
   _RegisterScreenState createState() => new _RegisterScreenState();
@@ -22,6 +23,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //instance of cloud firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  //used to get user's unique id after registration
+  late User? user = auth.currentUser;
+  late String uid = user!.uid;
   
 
   @override
@@ -137,38 +141,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     )      
               ),
             ),
-           // SizedBox(height: 20),
-           //start of social media sign up divider
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: Divider(color: Colors.black)
-                  ),
-                ),
-                Text('OR'),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20.0, right: 10.0),
-                    child: Divider(color: Colors.black)
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: ElevatedButton.icon(
-                    onPressed: (){},
-                    label: Text('Sign up with Facebook'),
-                    icon: Icon(
-                      Icons.facebook
-                    ),
-                    style: ElevatedButton.styleFrom(primary: Colors.indigo[800],
-                    fixedSize: Size(SizeConfig.blockSizeHorizontal * 250.0, SizeConfig.blockSizeVertical * 0.0)
-                    )      
-              ),
-            ),
           ] 
         )       
       )
@@ -179,10 +151,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try{
       await auth.createUserWithEmailAndPassword(email: _email, password: _password);
       
-      //used to get user's unique id after registration
-      final User? user = auth.currentUser;
-      final String uid = user!.uid;
-
       //adds user info to collection 'users' 
       CollectionReference users = firestore.collection('users');
       users.add({

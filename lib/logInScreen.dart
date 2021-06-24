@@ -96,39 +96,6 @@ class _LogInScreenState extends State<LogInScreen> {
                     )      
               ),
             ),
-            SizedBox(height: 20),
-            //start of OR divider for social media log in
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: Divider(color: Colors.black)
-                  ),
-                ),
-                Text('OR'),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20.0, right: 10.0),
-                    child: Divider(color: Colors.black)
-                  ),
-                )
-              ],
-            ),
-            //Start of facebook log in button
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              child: ElevatedButton.icon(
-                    onPressed: () {},
-                    label: Text('Sign in with Facebook'),
-                    icon: Icon(
-                      Icons.facebook
-                    ),
-                    style: ElevatedButton.styleFrom(primary: Colors.indigo[800],
-                    fixedSize: Size(SizeConfig.blockSizeHorizontal * 250.0, SizeConfig.blockSizeVertical * 0.0)                  
-                    )      
-              ),
-            ),
           ] 
         )       
       )

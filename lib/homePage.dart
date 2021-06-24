@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fan_page_app/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,24 +20,17 @@ class _HomePageState extends State<HomePage>{
   //instance of cloud firestore
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  //used to get user uid after registration
-  late User? user =  auth.currentUser;
-  late String uid = user!.uid;
-
   //used to store admin message and update to firestore database
   late String _message;
 
   //used to check user_role and allow for admin button to appear/reappear
   bool isVisible = false;
   
-  void changeVisibility(){
-    setState((){
-      isVisible = !isVisible;
-    });
-  }
-
   @override 
-  Widget build(BuildContext context){ 
+  Widget build(BuildContext context){
+
+    checkUser();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -60,9 +55,9 @@ class _HomePageState extends State<HomePage>{
                     //will sign out user and return to splash screen
                     TextButton(
                       child: Text('Yes'),
-                      onPressed: () {
+                      onPressed: () {                                            
                         auth.signOut();
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SplashScreen()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SplashScreen()));               
                       },      
                     ),            
                   ]
@@ -73,30 +68,30 @@ class _HomePageState extends State<HomePage>{
         ),
         //Stream builder returns message posts from firesetore database
         body: StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection('message_posts').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else
-          //maps document snapshot content from query snapshot
-            return ListView(
-              children: snapshot.data!.docs.map((doc) {
-                return Card(
-                  child: ListTile(
-                    title: Text(doc['content']),
-                  ),
-                );
-              }).toList(),
-            );
-        },
-      ),
+          stream: firestore.collection('message_posts').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else
+            //maps document snapshot content from query snapshot
+              return ListView(
+                children: snapshot.data!.docs.map((doc) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(doc['content']),
+                    ),
+                  );
+                }).toList(),
+              );
+          },
+        ),
         //button only visible to admin user
         //on pressed displays a pop up with a text box to allow user to post to message board
         floatingActionButton: Visibility(
           //will change depending on user role
-          visible: checkUserRole(),
+          visible: isVisible,
           child: FloatingActionButton(
             onPressed: ()=> showDialog(
                   context: context, 
@@ -135,63 +130,29 @@ class _HomePageState extends State<HomePage>{
             child: Icon(Icons.add),
           ),
         )
-      )
+      ),
     );
   }
 
-  //method to sign in through firebase auth
-  bool checkUserRole() {
- 
-    firestore.collection('users').where('user_id', isEqualTo: auth.currentUser!.uid).get().then((QuerySnapshot snapshot){
-      snapshot.docs.map((doc){
-        if(doc['user_role'] == 'admin'){
-          isVisible=true;
-          print("please");
-        }
-      });
-    });
-    return isVisible;     
+//method to check for user role
+  Future <bool?> checkUser() async  {
+    try{
+        //from the collection 'users' where user_id = currentUser_uid, get the document 
+       await firestore.collection('users').where('user_id', isEqualTo: auth.currentUser!.uid).get().then((QuerySnapshot snapshot){
+          snapshot.docs.forEach((doc){
+            //if user role for this document == admin, setState and make admin post button visible
+            if(doc['user_role'] == 'admin'){            
+              // isVisible = true;
+                setState((){
+                  isVisible=true;
+                });
+              }                          
+          });
+          return isVisible;
+        });     
+    } on FirebaseAuthException catch(e){
+      return false;
+    }
   }
 }
-  /*
-  bool checkUserRole() {
-
-  //used to get user uid after registration
-   User? user =  auth.currentUser;
-   String uid = user!.uid;
-
-   firestore.collection('users').where('user_id', isEqualTo: uid).get().then((QuerySnapshot snapshot){
-        snapshot.docs.forEach((doc){
-            if(doc['user_role']=='admin'){
-              isVisible=true;
-            }
-        });
-  });
-    return isVisible;
-  }
-}*/
-
-/*//Stream builder returns message posts from firesetore database
-        body: StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection('message_posts').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else
-          //maps document snapshot content from query snapshot
-            return ListView(
-              children: snapshot.data!.docs.map((doc) {
-                return Card(
-                  child: ListTile(
-                    title: Text(doc['content']),
-                  ),
-                );
-              }).toList(),
-            );
-        },
-      ),
-      */
-
 
